@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import './mystyles.css';
+import { ImageComponent } from "./components/imageComponent";
+import { TitleComponent } from "./components/titleComponent";
 import img from './content/husqvarna-logo.png';
 
 ReactDOM.render(
     <div>
-        <img src={img} height="100px" />
+        <TitleComponent text='Hola mundo' />
+        <ImageComponent image={img} />
     </div>,
     document.getElementById('root')
 )

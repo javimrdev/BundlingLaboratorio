@@ -8,16 +8,17 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
     app: './index.tsx',
+    appStyles: [
+      './mystyles.scss',
+    ]
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
@@ -33,32 +34,30 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.s[ac]ss$/i,
         exclude: /node_modules/,
         use: [
-          // Creates `style` nodes from JS strings
-          "style-loader",
-          // Translates CSS into CommonJS
-          "css-loader",
-          // Compiles Sass to CSS
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules:{
+                exportLocalsConvention: 'camelCase',
+                localIdentName: '[path][name]_[local]--[hash:base64:5]',
+                localIdentContext: path.resolve(__dirname, 'src'),
+              },
+            }
+          },
           "sass-loader",
         ],
       },
     ],
   },
-  devtool: 'eval-source-map',
-  devServer: {
-    static: './dist'
-  },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-  },
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    extensions: ['.js', '.ts', '.tsx'],
   },
   plugins: [
     new HtmlWebpackPlugin({
