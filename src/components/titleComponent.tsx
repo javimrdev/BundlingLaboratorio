@@ -1,9 +1,13 @@
 import React from 'react';
 import styles from './titleStyles.scss';
 
-export const TitleComponent = (props) => {
-    const text = props.text;
-const a: string = 'asd';
+interface Props {
+    text: string;
+}
+
+export const TitleComponent: React.FC<Props> = (props) => {
+    const text: string = props.text;
+
     return(
         <h2 className={styles.title}>{text}</h2>
     )
